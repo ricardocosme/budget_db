@@ -1,0 +1,31 @@
+PRAGMA foreign_keys = ON;
+
+CREATE TABLE month(
+  id INTEGER PRIMARY KEY ASC,
+  name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE income(
+  id INTEGER PRIMARY KEY ASC,
+  name TEXT NOT NULL,
+  amount INTEGER,
+  month INTEGER NOT NULL,
+  FOREIGN KEY(month) REFERENCES month(id) ON DELETE CASCADE
+);
+
+CREATE TABLE category(
+  id INTEGER PRIMARY KEY ASC,
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  budget INTEGER,
+  month INTEGER NOT NULL,
+  FOREIGN KEY(month) REFERENCES month(id) ON DELETE CASCADE
+  UNIQUE(name, month)
+);
+
+CREATE TABLE expense(
+  id INTEGER PRIMARY KEY ASC,
+  value INTEGER,
+  category INTEGER NOT NULL,
+  FOREIGN KEY(category) REFERENCES category(id) ON DELETE CASCADE
+);
